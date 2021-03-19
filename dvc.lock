@@ -50,18 +50,18 @@ stages:
     params:
       params.yaml:
         estimators.RandomForestClassifier.params.criterion: gini
-        estimators.RandomForestClassifier.params.max_depth: 890
+        estimators.RandomForestClassifier.params.max_depth: 1000
         estimators.RandomForestClassifier.params.max_features: sqrt
-        estimators.RandomForestClassifier.params.min_samples_leaf: 8
-        estimators.RandomForestClassifier.params.min_samples_split: 14
-        estimators.RandomForestClassifier.params.n_estimators: 1800
+        estimators.RandomForestClassifier.params.min_samples_leaf: 6
+        estimators.RandomForestClassifier.params.min_samples_split: 12
+        estimators.RandomForestClassifier.params.n_estimators: 2000
     outs:
     - path: report/params.json
-      md5: 38590fa6b8a5b02397e0e468d28785f5
-      size: 159
+      md5: ff2ec6ba50ce694a4f61151f72a65ac1
+      size: 160
     - path: report/scores.json
-      md5: cfd314f2be4a776c872e16d2ffa57fcb
+      md5: 903bc948826c02de6a682810ac3f91cb
       size: 112
     - path: saved_models/model.joblib
-      md5: 59440c6a8ee893451c3909f9fc468620
-      size: 54278771
+      md5: 01f5caf319d6746144843bad4238d09d
+      size: 76839099

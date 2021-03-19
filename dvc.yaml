@@ -20,11 +20,11 @@ stages:
     - data/processed/test_customerdata.csv
 
   train_and_evaluate:
-    cmd: python src/train_and_evaluate.py --config=params.yaml
+    cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - data/processed/train_customerdata.csv
     - data/processed/test_customerdata.csv 
-    - src/train_and_evaluate.py
+    - src/train_evaluate.py
     params:
     - estimators.RandomForestClassifier.params.n_estimators
     - estimators.RandomForestClassifier.params.min_samples_split
