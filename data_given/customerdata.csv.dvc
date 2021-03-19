@@ -1,0 +1,4 @@
+outs:
+- md5: 8cac3095fcf1fdc5d276164ba877e721
+  size: 971241
+  path: customerdata.csv
