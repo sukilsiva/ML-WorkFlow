@@ -1,0 +1,67 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/load_data.py --config=params.yaml
+    deps:
+    - path: data_given/customerdata.csv
+      md5: 8cac3095fcf1fdc5d276164ba877e721
+      size: 971241
+    - path: src/get_data.py
+      md5: a36554148037920492c42442660ad5a5
+      size: 1070
+    - path: src/load_data.py
+      md5: bc260ef702428473eb276a890a275227
+      size: 2931
+    outs:
+    - path: data/raw/customerdata.csv
+      md5: 075bc80ac55903da56f4077dee0d1f16
+      size: 537447
+  split_data:
+    cmd: python src/split_data.py --config=params.yaml
+    deps:
+    - path: data/raw/customerdata.csv
+      md5: 075bc80ac55903da56f4077dee0d1f16
+      size: 537447
+    - path: src/get_data.py
+      md5: a36554148037920492c42442660ad5a5
+      size: 1070
+    - path: src/split_data.py
+      md5: 01fbfffc871d03ce9e520f03f3527f0d
+      size: 1154
+    outs:
+    - path: data/processed/test_customerdata.csv
+      md5: 15e5b48614c1a7019b1eabe458013276
+      size: 99153
+    - path: data/processed/train_customerdata.csv
+      md5: b96d39ccc991b254adc83caddd5edf51
+      size: 396218
+  train_and_evaluate:
+    cmd: python src/train_evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed/test_customerdata.csv
+      md5: 15e5b48614c1a7019b1eabe458013276
+      size: 99153
+    - path: data/processed/train_customerdata.csv
+      md5: b96d39ccc991b254adc83caddd5edf51
+      size: 396218
+    - path: src/train_evaluate.py
+      md5: 2b341332fc58ff61e344d90f9763a2db
+      size: 3535
+    params:
+      params.yaml:
+        estimators.RandomForestClassifier.params.criterion: gini
+        estimators.RandomForestClassifier.params.max_depth: 890
+        estimators.RandomForestClassifier.params.max_features: sqrt
+        estimators.RandomForestClassifier.params.min_samples_leaf: 8
+        estimators.RandomForestClassifier.params.min_samples_split: 14
+        estimators.RandomForestClassifier.params.n_estimators: 1800
+    outs:
+    - path: report/params.json
+      md5: 38590fa6b8a5b02397e0e468d28785f5
+      size: 159
+    - path: report/scores.json
+      md5: cfd314f2be4a776c872e16d2ffa57fcb
+      size: 112
+    - path: saved_models/model.joblib
+      md5: 59440c6a8ee893451c3909f9fc468620
+      size: 54278771
