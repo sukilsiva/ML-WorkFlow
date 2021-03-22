@@ -26,6 +26,8 @@ estimators:
 
 model_dir: saved_models
 
+testing_path:
+  json_file_path: ML-WorkFlow/tests
 
 reports:
   params: report/params.json
