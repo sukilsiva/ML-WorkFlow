@@ -10,43 +10,43 @@ stages:
       md5: a36554148037920492c42442660ad5a5
       size: 1070
     - path: src/load_data.py
-      md5: bc260ef702428473eb276a890a275227
-      size: 2931
+      md5: a0df0c41791b954b15e966f5507c6fb4
+      size: 3269
     outs:
     - path: data/raw/customerdata.csv
-      md5: 075bc80ac55903da56f4077dee0d1f16
-      size: 537447
+      md5: aff96bfbb3293f35de25bed5ba8f8fcf
+      size: 925613
   split_data:
     cmd: python src/split_data.py --config=params.yaml
     deps:
     - path: data/raw/customerdata.csv
-      md5: 075bc80ac55903da56f4077dee0d1f16
-      size: 537447
+      md5: aff96bfbb3293f35de25bed5ba8f8fcf
+      size: 925613
     - path: src/get_data.py
       md5: a36554148037920492c42442660ad5a5
       size: 1070
     - path: src/split_data.py
-      md5: 01fbfffc871d03ce9e520f03f3527f0d
-      size: 1154
+      md5: 357d7c7354392e2c9019d6734d0df6e9
+      size: 1110
     outs:
     - path: data/processed/test_customerdata.csv
-      md5: 15e5b48614c1a7019b1eabe458013276
-      size: 99153
+      md5: f0eb6d0c456d603dd27f9664efb3cc07
+      size: 181287
     - path: data/processed/train_customerdata.csv
-      md5: b96d39ccc991b254adc83caddd5edf51
-      size: 396218
+      md5: f97bd8eb48133d27d1e892797003ffa7
+      size: 725677
   train_and_evaluate:
     cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/test_customerdata.csv
-      md5: 15e5b48614c1a7019b1eabe458013276
-      size: 99153
+      md5: f0eb6d0c456d603dd27f9664efb3cc07
+      size: 181287
     - path: data/processed/train_customerdata.csv
-      md5: b96d39ccc991b254adc83caddd5edf51
-      size: 396218
+      md5: f97bd8eb48133d27d1e892797003ffa7
+      size: 725677
     - path: src/train_evaluate.py
-      md5: 2b341332fc58ff61e344d90f9763a2db
-      size: 3535
+      md5: 63bb483874ea959989eecb7868531f23
+      size: 3665
     params:
       params.yaml:
         estimators.RandomForestClassifier.params.criterion: gini
@@ -60,8 +60,8 @@ stages:
       md5: ff2ec6ba50ce694a4f61151f72a65ac1
       size: 160
     - path: report/scores.json
-      md5: 903bc948826c02de6a682810ac3f91cb
+      md5: a7b230999c3cb78a58b33c344df894fc
       size: 112
     - path: saved_models/model.joblib
-      md5: 01f5caf319d6746144843bad4238d09d
-      size: 76839099
+      md5: 3048f2b99c5aa6b0df2b63e473a410af
+      size: 83624955
