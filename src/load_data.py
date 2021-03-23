@@ -11,13 +11,16 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 import joblib
 from get_data import read_params, get_data
+pd.pandas.set_option('display.max_columns',None)
 
 def load_and_save(config_path):
     config = read_params(config_path)
     scalar_path = config['scalar_path']
     df = get_data(config_path)
     all_features = df.columns
+    #print(all_features)
     df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], downcast='integer', errors='coerce')
+    #print(df.head())
     numerical_feature = [feature for feature in df.columns if df[feature].dtypes!="O"]
     numerical_feature.remove('SeniorCitizen')
     for feature in numerical_feature:
@@ -34,6 +37,7 @@ def load_and_save(config_path):
     df.drop(categoircal_features, axis=1, inplace=True)                             # Dropping Categorical Vairables
     data = data.apply(LabelEncoder().fit_transform)                                 # Transforming the characters to Labels
     df = pd.concat([df,data], axis=1)
+    #print(df.head())
     scaling_feature = [feature for feature in all_features if feature not in ["customerID", "Churn"]]
     df.replace([np.inf, -np.inf], 0, inplace=True)                                  # Replacing inf values with 0
     scaler=MinMaxScaler()
@@ -41,8 +45,9 @@ def load_and_save(config_path):
     df = pd.concat([df[["customerID", "Churn"]].reset_index(drop=True),
                     pd.DataFrame(scaler.transform(df[scaling_feature]), columns=scaling_feature)],
                     axis=1)
-    df=df[[feature for feature in data.columns]]                                    # Arranging the Columns with respet to dataset
+    #df=df[[feature for feature in all_features]]                                   # Arranging the Columns with respet to dataset
     df.drop("customerID", axis=1, inplace=True)                                     # Dropping CustomerID
+    #print(df.head())
     #df.drop(["Churn.1"], axis=1, inplace=True)                # Remove Duplicate Columns
     raw_data_path = config["load_data"]["raw_dataset_csv"]
     df.to_csv(raw_data_path, sep=",", index=False)

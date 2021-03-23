@@ -50,10 +50,11 @@ template_dir = os.path.join(webapp_root, "templates")
 app = Flask(__name__, static_folder=static_dir, template_folder=template_dir)
 
 ### COnfigurations are been set up for DB and Flask App
-app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'idntknowmypassword#404'
-app.config['MYSQL_DATABASE_DB'] = 'churnapp'
-app.config['MYSQL_DATABASE_HOST'] = 'localhost'
+db = yaml.full_load(open("database.yaml"))
+app.config['MYSQL_DATABASE_USER'] = db['mysql_user']
+app.config['MYSQL_DATABASE_PASSWORD'] = db['mysql_password']
+app.config['MYSQL_DATABASE_DB'] = db['mysql_db']
+app.config['MYSQL_DATABASE_HOST'] = db['mysql_host']
 
 ### Initiating the Flask app
 mysql = MySQL()
@@ -215,4 +216,4 @@ def predict():
             return render_template("404.html", error=error)
 
 if __name__ == "__main__":
-    app.run(port = 5080, debug =True)
+    app.run(port = 8000, debug =True)
