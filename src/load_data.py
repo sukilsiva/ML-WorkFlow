@@ -9,10 +9,12 @@ import numpy as np
 import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
+import joblib
 from get_data import read_params, get_data
 
 def load_and_save(config_path):
     config = read_params(config_path)
+    scalar_path = config['scalar_path']
     df = get_data(config_path)
     all_features = df.columns
     df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], downcast='integer', errors='coerce')
@@ -44,6 +46,11 @@ def load_and_save(config_path):
     #df.drop(["Churn.1"], axis=1, inplace=True)                # Remove Duplicate Columns
     raw_data_path = config["load_data"]["raw_dataset_csv"]
     df.to_csv(raw_data_path, sep=",", index=False)
+
+    os.makedirs(scalar_path, exist_ok=True)
+    scaled_path = os.path.join(scalar_path, "scalar.joblib")
+
+    joblib.dump(scaler, scaled_path)
 
 if __name__=="__main__":
     args = argparse.ArgumentParser()

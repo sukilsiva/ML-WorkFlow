@@ -45,8 +45,10 @@ def train_and_evaluate(config_path):
     train_y = train[target]
     test_y = test[target]
 
-    train_x = train.drop(target, axis=1)
-    test_x = test.drop(target, axis=1)
+    selected_features = ["Contract", "OnlineSecurity", "TechSupport", "tenure", "MonthlyCharges", "SeniorCitizen", "Dependents"]
+    
+    train_x = train[selected_features]
+    test_x = test[selected_features]
 
     classifier = RandomForestClassifier(
         n_estimators=n_estimators_rd, 

@@ -33,4 +33,5 @@ reports:
   params: report/params.json
   scores: report/scores.json
 
+scalar_path: saved_packages/scalar.joblib
 webapp_model_dir: prediction_service/model/model.joblib
