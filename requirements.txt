@@ -3,7 +3,6 @@
 
 # Third Party Packages Install
 absl-py==0.11.0
-aiohttp==3.7.3
 alpha-vantage==2.3.1
 appdirs==1.4.4
 argon2-cffi==20.1.0
@@ -21,7 +20,6 @@ cached-property==1.5.2
 cachetools==4.2.0
 certifi==2020.12.5
 cffi==1.14.4
-chardet==4.0
 click==7.1.2
 cloudpickle==1.6.0
 colorama==0.4.4
