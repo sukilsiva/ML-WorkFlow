@@ -1,9 +1,5 @@
 {
-    "SeniorCitizen": {
-        "min": 0.0,
-        "max": 1.0
-    },
-    "tenure": {
+   "tenure": {
         "min": 0.0,
         "max": 72.0
     },
