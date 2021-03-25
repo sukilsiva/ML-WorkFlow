@@ -19,6 +19,7 @@ from flaskext.mysql import MySQL
 import joblib
 import argparse
 import yaml
+from prediction_service import prediction
 
 ### Reading the YAML file for configuration settings
 def read_data(configurations=None):
@@ -152,65 +153,71 @@ def predict():
 
             ### Load the MinMaxScaler
             scaler = pickle.load(open("scaler.pkl", "rb"))
-            
-            ### Fitting the Data for Scaling the Values
-            data=scaler.fit_transform(np.array([contract, onlinesecurity, techsupport, Tenure, monthlyCharges, seniorcitizen, dependents]).reshape(-1,1))
-            
-            args = argparse.ArgumentParser()
-            args.add_argument("--config",default="params.yaml")
-            parsed_args = args.parse_args()
-            prediction, prediction_proba=read_yaml_file(config_path=parsed_args.config, data=data)
-            
-            my_prediction = prediction[0]
-            my_prediction_proba = np.round(prediction_proba[0,1], 2)
 
-            if  my_prediction == 0:
-                churn = "No"
+            valid_dict = {"MonthlyCharges":monthlyCharges,
+                           "tenure" : Tenure }
+
+            if prediction.validate_input(valid_dict) == True:
+                ### Fitting the Data for Scaling the Values
+                data=scaler.fit_transform(np.array([contract, onlinesecurity, techsupport, Tenure, monthlyCharges, seniorcitizen, dependents]).reshape(-1,1))
+
+                args = argparse.ArgumentParser()
+                args.add_argument("--config",default="params.yaml")
+                parsed_args = args.parse_args()
+                answer, prediction_proba=read_yaml_file(config_path=parsed_args.config, data=data)
+
+                my_prediction = answer[0]
+                my_prediction_proba = np.round(prediction_proba[0,1], 2)
+
+                if  my_prediction == 0:
+                    churn = "No"
+                else:
+                    churn = "yes"
+
+                if seniorcitizen == 0:
+                    seniorcitizen = "No"
+                else:
+                    seniorcitizen = "Yes"
+
+                if dependents == 0:
+                    dependents = "No"
+                else:
+                    dependents = "Yes"
+
+                if techsupport == 0:
+                    techsupport = "No"
+                else:
+                    techsupport = "Yes"
+
+                if onlinesecurity == 0:
+                    onlinesecurity= "No"
+                else:
+                    onlinesecurity = "Yes"
+
+                if contract == 0:
+                    contract = "Month-to-Month"
+                elif contract == 1:
+                    contract = "One-Year"
+                elif contract == 2:
+                    contract = "Two-Year"
+
+
+                query = "INSERT INTO webappdata (CustomerID, gender, SeniorCitizen, Partner, Dependents, tenure, PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges, Churn) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                values = (customerid, Gender, seniorcitizen, partner, dependents, Tenure, phoneservice, multiplelines, InternetService_No, onlinesecurity, onlinebackup, deviceprotection, techsupport, streamingTV, streamingMovies, contract, billing, paymentmethod, monthlyCharges, totalCharges, churn)
+                conn = mysql.connect()
+                cur = conn.cursor()
+                cur.execute(query, values)
+                conn.commit()
+                cur.close()
+                return render_template("index.html",prediction_text='Churn probability is {} and the Churn is {}'.format(my_prediction_proba, churn))
             else:
-                churn = "yes"
-
-            if seniorcitizen == 0:
-                seniorcitizen = "No"
-            else:
-                seniorcitizen = "Yes"
-
-            if dependents == 0:
-                dependents = "No"
-            else:
-                dependents = "Yes"
-
-            if techsupport == 0:
-                techsupport = "No"
-            else:
-                techsupport = "Yes"
-
-            if onlinesecurity == 0:
-                onlinesecurity= "No"
-            else:
-                onlinesecurity = "Yes"
-
-            if contract == 0:
-                contract = "Month-to-Month"
-            elif contract == 1:
-                contract = "One-Year"
-            elif contract == 2:
-                contract = "Two-Year"
-
-
-            query = "INSERT INTO webappdata (CustomerID, gender, SeniorCitizen, Partner, Dependents, tenure, PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies, Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges, Churn) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-            values = (customerid, Gender, seniorcitizen, partner, dependents, Tenure, phoneservice, multiplelines, InternetService_No, onlinesecurity, onlinebackup, deviceprotection, techsupport, streamingTV, streamingMovies, contract, billing, paymentmethod, monthlyCharges, totalCharges, churn)
-            conn = mysql.connect()
-            cur = conn.cursor()
-            cur.execute(query, values)
-            conn.commit()
-            cur.close()
-
-            return render_template("index.html",prediction_text='Churn probability is {} and the Churn is {}'.format(my_prediction_proba, churn))
+                Error = {"Error": "Please check the Input constraints Value range"}
+                return render_template("404.html", error=Error)
         
         ### If the above step Not properly worked then raise 404 Exception HTML page
         except Exception as e:
             print(e)
-            error = {"error": "Something went wrong!! Please Check the Input Constraints or Try again Later!"}
+            error = {"error": "Please Check the Input Constraints"}
             error = {"error": e}
 
             return render_template("404.html", error=error)
