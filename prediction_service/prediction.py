@@ -14,7 +14,7 @@ class NotinCols(Exception):
         super().__init__(message)
 
 
-def get_schema(schema_path="schema_in.json"):
+def get_schema(schema_path="prediction_service/schema_in.json"):
     with open(schema_path) as json_file:
         schema = json.load(json_file)
     return schema
