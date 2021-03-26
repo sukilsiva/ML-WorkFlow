@@ -41,7 +41,7 @@ pip3 install mlflow
 ### Break down into end to end tests
 
 - The Test cases were to check the user input in the following ways
-- 1. From Web application Form Response and test Cases were
+- 1.From Web application Form Response and test Cases were
 - 1.1 Checking for form response Correct range
 - 1.2 Checking for form response Incorrect range
 - 2 From API Response like Postman and Test cases were
