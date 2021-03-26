@@ -3,9 +3,6 @@ import json
 import os
 import numpy as np
 
-
-schema_path = os.path.join("/home/srinivasan/Sukil/ML-WorkFlow/prediction_service/schema_in.json")
-
 class NotinRange(Exception):
     def __init__(self, message = "Values Not in range"):
         self.message = message
@@ -17,7 +14,7 @@ class NotinCols(Exception):
         super().__init__(message)
 
 
-def get_schema(schema_path=schema_path):
+def get_schema(schema_path="schema_in.json"):
     with open(schema_path) as json_file:
         schema = json.load(json_file)
     return schema
