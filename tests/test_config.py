@@ -21,8 +21,8 @@ input_data = {
 
     "incorrect_col":
     {
-     "Tenure" : 76,
-     "montlycharges":5
+     "Tenure" : 25,
+     "montlycharges":90
     }
 }
 
@@ -47,6 +47,7 @@ def test_form_response_incorrect_range(data=input_data["incorrect_range"]):
 #    res = api_response(data)
 #    assert res["response"] == prediction_service.prediction.NotinRange().message
 
-def test_api_response_incorrect_col(data=input_data["incorrect_col"]):
-    res = validate_input(data)
-    assert res["response"] == prediction_service.prediction.NotinCols
+#def test_api_response_incorrect_col(data=input_data["incorrect_col"]):
+#    res = validate_input(data)
+#    assert res["response"] == prediction_service.prediction.NotinCols().message
+    

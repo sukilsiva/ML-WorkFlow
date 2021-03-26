@@ -28,15 +28,12 @@ def validate_input(valid_dict=None):
         actual_cols = schema.keys()
         if col not in actual_cols:
             raise NotinCols
-
     def _validate_values(col, val):
         schema = get_schema()
-
         if not (schema[col]["min"] <= float(valid_dict[col]) <= schema[col]["max"]) :
             raise NotinRange
-    
+
     for col, val in valid_dict.items():
         _validate_cols(col)
         _validate_values(col, val)
-    
     return True
