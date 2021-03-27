@@ -20,7 +20,9 @@ def get_data(config_path):
     #print(username, password, host, dbname)
     #print("mysql+pymysql://"+username+":"+password+"@"+host+"/"+dbname)
     engine = sqlalchemy.create_engine("mysql+pymysql://"+username+":"+password+"@"+host+"/"+dbname)
-    data = pd.read_sql_table("customerdata",engine)
+    original_data = pd.read_sql_table("customerdata",engine)
+    app_data = pd.read_sql_table("webappdata",engine)
+    data = pd.concat([original_data, app_data], axis=0)
     data.to_csv(data_path,sep=",",encoding="utf-8", index=False)
     return data
 
