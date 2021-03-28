@@ -3,6 +3,7 @@
 # Clean the data
 # Do Feature Engineering and Feature selection
 # save it in the data/raw for further process
+
 import os
 import argparse
 import numpy as np
@@ -10,18 +11,21 @@ import pandas as pd
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import LabelEncoder
 import joblib
-from get_data import read_params, get_data
+from get_data import read_params, get_input_data
 pd.pandas.set_option('display.max_columns',None)
 
 def load_and_save(config_path):
     config = read_params(config_path)
     scalar_path = config['scalar_path']
-    df = get_data(config_path)
+    #print(config)
+    df = get_input_data(config_path)
     all_features = df.columns
     #print(all_features)
     df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], downcast='integer', errors='coerce')
     #print(df.head())
-    numerical_feature = [feature for feature in df.columns if df[feature].dtypes!="O"]
+    numerical_feature = [feature for feature in all_features if df[feature].dtypes!="O"]
+    #print(df.info())
+    #print(numerical_feature)
     numerical_feature.remove('SeniorCitizen')
     for feature in numerical_feature:
         df[feature] = np.log(df[feature])
@@ -49,6 +53,7 @@ def load_and_save(config_path):
     df.drop("customerID", axis=1, inplace=True)                                     # Dropping CustomerID
     #print(df.head())
     #df.drop(["Churn.1"], axis=1, inplace=True)                # Remove Duplicate Columns
+    df = df.iloc[:,1:]
     raw_data_path = config["load_data"]["raw_dataset_csv"]
     df.to_csv(raw_data_path, sep=",", index=False)
 

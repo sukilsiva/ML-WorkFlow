@@ -3,8 +3,9 @@
 Created on Sat Dec 19 16:12:02 2020
 
 @author: Sukil Siva
-"""
 
+Some reference i have learned while using SQL
+"""
 ### Importing the Libraries
 from flask import Flask, request, render_template
 import os 
@@ -146,7 +147,7 @@ def predict():
             elif request.form["Contract"] == 2:
                 contract = 2
 
-            monthlyCharges = int(request.form["MonthlyCharges"])
+            monthlyCharges = float(request.form["MonthlyCharges"])
             Tenure = int(request.form["Tenure"])
 
             totalCharges = str(monthlyCharges * Tenure)
@@ -175,9 +176,9 @@ def predict():
                     churn = "yes"
 
                 if seniorcitizen == 0:
-                    seniorcitizen = "No"
+                    seniorcitizen = int(0)
                 else:
-                    seniorcitizen = "Yes"
+                    seniorcitizen = int(1)
 
                 if dependents == 0:
                     dependents = "No"
@@ -223,4 +224,4 @@ def predict():
             return render_template("404.html", error=error)
 
 if __name__ == "__main__":
-    app.run(port = 8000, debug =True)
+    app.run(port = 8080, debug =True)
