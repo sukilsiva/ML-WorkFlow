@@ -1,5 +1,5 @@
 # Local Packages Install
--e .
+# -e .
 
 # Third Party Packages Install
 Flask==1.1.2
