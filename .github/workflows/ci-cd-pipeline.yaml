@@ -38,6 +38,8 @@ jobs:
     - name: Test with DVC
       run: |
         dvc repro
+        dvc metrics show
+        dvc metrics diff
     - name: Deploy to Heroku
       env:
         HEROKU_API_TOKEN: ${{ secrets.HEROKU_API_TOKEN }}
