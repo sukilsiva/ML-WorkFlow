@@ -4,46 +4,46 @@ stages:
     cmd: python src/load_data.py --config=params.yaml
     deps:
     - path: data_given/customerdata.csv
-      md5: 8cac3095fcf1fdc5d276164ba877e721
-      size: 971241
+      md5: b98427b8d5c4f9c56ded1c212eeb6c88
+      size: 971348
     - path: src/get_data.py
-      md5: a36554148037920492c42442660ad5a5
-      size: 1070
+      md5: 0dbbd6378022ca353b58bbc2d6493a3b
+      size: 1305
     - path: src/load_data.py
-      md5: a0df0c41791b954b15e966f5507c6fb4
-      size: 3269
+      md5: d7e1bd26902f00ada8b01826b481f32a
+      size: 3378
     outs:
     - path: data/raw/customerdata.csv
-      md5: aff96bfbb3293f35de25bed5ba8f8fcf
-      size: 925613
+      md5: 9f3c12d4cb500f23650dcb2c6ecee97c
+      size: 878583
   split_data:
     cmd: python src/split_data.py --config=params.yaml
     deps:
     - path: data/raw/customerdata.csv
-      md5: aff96bfbb3293f35de25bed5ba8f8fcf
-      size: 925613
+      md5: 9f3c12d4cb500f23650dcb2c6ecee97c
+      size: 878583
     - path: src/get_data.py
-      md5: a36554148037920492c42442660ad5a5
-      size: 1070
+      md5: 0dbbd6378022ca353b58bbc2d6493a3b
+      size: 1305
     - path: src/split_data.py
-      md5: 357d7c7354392e2c9019d6734d0df6e9
-      size: 1110
+      md5: 57757d3b32482b4cba67d6eaaab4c58f
+      size: 1112
     outs:
     - path: data/processed/test_customerdata.csv
-      md5: f0eb6d0c456d603dd27f9664efb3cc07
-      size: 181287
+      md5: 72486e5c77e74ada47297b828a8d1126
+      size: 174825
     - path: data/processed/train_customerdata.csv
-      md5: f97bd8eb48133d27d1e892797003ffa7
-      size: 725677
+      md5: cdbac50bfd7188c2d8b44f61a617df99
+      size: 699198
   train_and_evaluate:
     cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/test_customerdata.csv
-      md5: f0eb6d0c456d603dd27f9664efb3cc07
-      size: 181287
+      md5: 72486e5c77e74ada47297b828a8d1126
+      size: 174825
     - path: data/processed/train_customerdata.csv
-      md5: f97bd8eb48133d27d1e892797003ffa7
-      size: 725677
+      md5: cdbac50bfd7188c2d8b44f61a617df99
+      size: 699198
     - path: src/train_evaluate.py
       md5: 63bb483874ea959989eecb7868531f23
       size: 3665
@@ -60,8 +60,8 @@ stages:
       md5: ff2ec6ba50ce694a4f61151f72a65ac1
       size: 160
     - path: report/scores.json
-      md5: a7b230999c3cb78a58b33c344df894fc
-      size: 112
+      md5: cd5c80dbd60493e69d2e09ca53f81eab
+      size: 111
     - path: saved_models/model.joblib
-      md5: 3048f2b99c5aa6b0df2b63e473a410af
-      size: 83624955
+      md5: 015402d17f019dbb1dac22acf5e5e22f
+      size: 92106563
