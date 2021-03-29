@@ -1,0 +1,11 @@
+# Heres a comment
+*.psd
+*.pdf
+/tests
+/src
+/report
+/dist
+/ChurnPrediction.egg-info
+/build
+/data
+/data_given
