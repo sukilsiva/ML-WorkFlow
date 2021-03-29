@@ -4,46 +4,46 @@ stages:
     cmd: python src/load_data.py --config=params.yaml
     deps:
     - path: data_given/customerdata.csv
-      md5: b98427b8d5c4f9c56ded1c212eeb6c88
-      size: 971348
+      md5: 5cef9c35a94b17542e9d544bef3720a8
+      size: 971697
     - path: src/get_data.py
-      md5: 0dbbd6378022ca353b58bbc2d6493a3b
-      size: 1305
+      md5: 530548f2bd47ef6c7c864d046a7de66d
+      size: 1493
     - path: src/load_data.py
       md5: d7e1bd26902f00ada8b01826b481f32a
       size: 3378
     outs:
     - path: data/raw/customerdata.csv
-      md5: 9f3c12d4cb500f23650dcb2c6ecee97c
-      size: 878583
+      md5: ee121fd511b834d470770686033ddc8d
+      size: 879001
   split_data:
     cmd: python src/split_data.py --config=params.yaml
     deps:
     - path: data/raw/customerdata.csv
-      md5: 9f3c12d4cb500f23650dcb2c6ecee97c
-      size: 878583
+      md5: ee121fd511b834d470770686033ddc8d
+      size: 879001
     - path: src/get_data.py
-      md5: 0dbbd6378022ca353b58bbc2d6493a3b
-      size: 1305
+      md5: 530548f2bd47ef6c7c864d046a7de66d
+      size: 1493
     - path: src/split_data.py
       md5: 57757d3b32482b4cba67d6eaaab4c58f
       size: 1112
     outs:
     - path: data/processed/test_customerdata.csv
-      md5: 72486e5c77e74ada47297b828a8d1126
-      size: 174825
+      md5: 3c0e88e2a9e65389245bf2002445fe32
+      size: 174995
     - path: data/processed/train_customerdata.csv
-      md5: cdbac50bfd7188c2d8b44f61a617df99
-      size: 699198
+      md5: 2a7d4e02716d2554d2ac7e0eca5ac8bd
+      size: 699442
   train_and_evaluate:
     cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/test_customerdata.csv
-      md5: 72486e5c77e74ada47297b828a8d1126
-      size: 174825
+      md5: 3c0e88e2a9e65389245bf2002445fe32
+      size: 174995
     - path: data/processed/train_customerdata.csv
-      md5: cdbac50bfd7188c2d8b44f61a617df99
-      size: 699198
+      md5: 2a7d4e02716d2554d2ac7e0eca5ac8bd
+      size: 699442
     - path: src/train_evaluate.py
       md5: 63bb483874ea959989eecb7868531f23
       size: 3665
@@ -60,8 +60,8 @@ stages:
       md5: ff2ec6ba50ce694a4f61151f72a65ac1
       size: 160
     - path: report/scores.json
-      md5: cd5c80dbd60493e69d2e09ca53f81eab
-      size: 111
+      md5: 7d606d4399372f8458ae62a76b27690e
+      size: 112
     - path: saved_models/model.joblib
-      md5: 015402d17f019dbb1dac22acf5e5e22f
-      size: 92106563
+      md5: 3a3f88abd4385914e6071c85dc8825c4
+      size: 92561123

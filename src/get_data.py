@@ -1,4 +1,6 @@
+from numpy.core.numeric import flatnonzero
 import pandas as pd
+from pandas.core.indexes.base import Index
 import sqlalchemy
 import argparse
 import yaml
@@ -22,11 +24,13 @@ def get_input_data(config_path):
     #print(username, password, host, dbname)
     #print("mysql+pymysql://"+username+":"+password+"@"+host+"/"+dbname)
     engine = sqlalchemy.create_engine("mysql+pymysql://"+username+":"+password+"@"+host+"/"+dbname)
-    original_data = pd.read_sql_table("customerdata",engine)
-    app_data = pd.read_sql_table("webappdata",engine)
-    data = pd.concat([original_data, app_data], axis=0)
-    data = data.iloc[:, :-1]
-    #print(data.head())
+    original_data = pd.read_sql_table("customerdata",engine, index_col=0)
+    app_data = pd.read_sql_table("webappdata",engine, index_col=0)
+    #print(original_data.head())
+    #print(app_data.head())
+    data = pd.concat([original_data, app_data],axis=0)
+    data.reset_index(drop=True, inplace=True)
+    print(data.tail())
     data.to_csv(data_path,sep=",",encoding="utf-8", index=False)
     return data
 
