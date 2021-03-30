@@ -30,7 +30,7 @@ def get_input_data(config_path):
     #print(app_data.head())
     data = pd.concat([original_data, app_data],axis=0)
     data.reset_index(drop=True, inplace=True)
-    print(data.tail())
+    #print(data.tail())
     data.to_csv(data_path,sep=",",encoding="utf-8", index=False)
     return data
 
