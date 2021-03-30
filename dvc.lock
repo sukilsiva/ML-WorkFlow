@@ -4,8 +4,8 @@ stages:
     cmd: python src/load_data.py --config=params.yaml
     deps:
     - path: data_given/customerdata.csv
-      md5: 5cef9c35a94b17542e9d544bef3720a8
-      size: 971697
+      md5: 703f21b4437ad8d587eb5eb7bfe688fd
+      size: 971811
     - path: src/get_data.py
       md5: 530548f2bd47ef6c7c864d046a7de66d
       size: 1493
@@ -14,14 +14,14 @@ stages:
       size: 3378
     outs:
     - path: data/raw/customerdata.csv
-      md5: ee121fd511b834d470770686033ddc8d
-      size: 879001
+      md5: f8ffec51993a3182cdd38dfea02d79db
+      size: 879140
   split_data:
     cmd: python src/split_data.py --config=params.yaml
     deps:
     - path: data/raw/customerdata.csv
-      md5: ee121fd511b834d470770686033ddc8d
-      size: 879001
+      md5: f8ffec51993a3182cdd38dfea02d79db
+      size: 879140
     - path: src/get_data.py
       md5: 530548f2bd47ef6c7c864d046a7de66d
       size: 1493
@@ -30,20 +30,20 @@ stages:
       size: 1112
     outs:
     - path: data/processed/test_customerdata.csv
-      md5: 3c0e88e2a9e65389245bf2002445fe32
-      size: 174995
+      md5: 78742c3bdb8bbfe81f0bdd305406a698
+      size: 174678
     - path: data/processed/train_customerdata.csv
-      md5: 2a7d4e02716d2554d2ac7e0eca5ac8bd
-      size: 699442
+      md5: ea5d92e78184339e84f27861c0bd479b
+      size: 699897
   train_and_evaluate:
     cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/test_customerdata.csv
-      md5: 3c0e88e2a9e65389245bf2002445fe32
-      size: 174995
+      md5: 78742c3bdb8bbfe81f0bdd305406a698
+      size: 174678
     - path: data/processed/train_customerdata.csv
-      md5: 2a7d4e02716d2554d2ac7e0eca5ac8bd
-      size: 699442
+      md5: ea5d92e78184339e84f27861c0bd479b
+      size: 699897
     - path: src/train_evaluate.py
       md5: 63bb483874ea959989eecb7868531f23
       size: 3665
@@ -60,8 +60,8 @@ stages:
       md5: ff2ec6ba50ce694a4f61151f72a65ac1
       size: 160
     - path: report/scores.json
-      md5: 7d606d4399372f8458ae62a76b27690e
+      md5: 434b377419870ea7edc44cf510fa3359
       size: 112
     - path: saved_models/model.joblib
-      md5: 3a3f88abd4385914e6071c85dc8825c4
-      size: 92561123
+      md5: c24b537de86b353b589aa0c150427ee4
+      size: 91638883
