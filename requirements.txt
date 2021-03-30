@@ -111,7 +111,6 @@ parso==0.8.1
 pathlib2==2.3.5
 pathspec==0.8.1
 patsy==0.5.1
-phonenumbers==8.12.20
 pickleshare==0.7.5
 plotly==4.14.3
 pluggy==0.13.1
