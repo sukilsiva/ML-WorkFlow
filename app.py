@@ -62,7 +62,7 @@ app.config['MYSQL_DATABASE_HOST'] = db['mysql_host']
 mysql = MySQL()
 mysql.init_app(app)
 
-@app.route('/', methods=['GET'])
+@app.route('/', methods=['GET', 'POST'])
 def welcome():
     return render_template("index.html")
 
