@@ -34,8 +34,11 @@ def read_yaml_file(config_path, data=None):
     
     ### Get the Joblib Model From Local Disk
     classifier = joblib.load(model_dir_path)
+    #pickle_in = open("model.pkl","rb")
+    #classifier = pickle.load(pickle_in)
 
     ### Prediction
+    print(classifier)
     prediction=classifier.predict(np.reshape(data, (1,7)))
     ###Prediction Probability
     prediction_proba = classifier.predict_proba(np.reshape(data, (1,7)))
@@ -161,13 +164,13 @@ def predict():
             if prediction.validate_input(valid_dict) == True:
                 ### Fitting the Data for Scaling the Values
                 data=scaler.fit_transform(np.array([contract, onlinesecurity, techsupport, Tenure, monthlyCharges, seniorcitizen, dependents]).reshape(-1,1))
-
+                print(data)
                 args = argparse.ArgumentParser()
                 args.add_argument("--config",default="params.yaml")
                 parsed_args = args.parse_args()
                 answer, prediction_proba=read_yaml_file(config_path=parsed_args.config, data=data)
 
-                my_prediction = answer[0]
+                my_prediction = answer
                 my_prediction_proba = np.round(prediction_proba[0,1], 2)
 
                 if  my_prediction == 0:

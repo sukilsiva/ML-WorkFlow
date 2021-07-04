@@ -6,6 +6,7 @@ import warnings
 import sys
 import pandas as pd
 import numpy as np
+from collections import Counter
 from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -49,7 +50,7 @@ def train_and_evaluate(config_path):
     
     train_x = train[selected_features]
     test_x = test[selected_features]
-
+    print(train_x)
     classifier = RandomForestClassifier(
         n_estimators=n_estimators_rd, 
         min_samples_split=min_samples_split_rd,
@@ -58,9 +59,12 @@ def train_and_evaluate(config_path):
         max_depth=max_depth_rd,
         criterion=criterion_rd, 
         random_state=random_state)
+    print(classifier)
     classifier.fit(train_x, train_y)
 
     predicted_qualities = classifier.predict(test_x)
+    counts1 = Counter(predicted_qualities)
+    print(counts1)
     
     (precision, recall, accuracy) = eval_metrics(test_y, predicted_qualities)
 

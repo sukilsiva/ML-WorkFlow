@@ -4,64 +4,64 @@ stages:
     cmd: python src/load_data.py --config=params.yaml
     deps:
     - path: data_given/customerdata.csv
-      md5: 703f21b4437ad8d587eb5eb7bfe688fd
-      size: 971811
+      md5: 59e354f5f391f7d3cd355c5a29e2749d
+      size: 971929
     - path: src/get_data.py
-      md5: 530548f2bd47ef6c7c864d046a7de66d
-      size: 1493
+      md5: f9efe881ea7051b032bc145a8d648b2b
+      size: 1494
     - path: src/load_data.py
       md5: d7e1bd26902f00ada8b01826b481f32a
       size: 3378
     outs:
     - path: data/raw/customerdata.csv
-      md5: f8ffec51993a3182cdd38dfea02d79db
-      size: 879140
+      md5: dbd16bbb9a2252c8413f0ae5e8ddbbc5
+      size: 879273
   split_data:
     cmd: python src/split_data.py --config=params.yaml
     deps:
     - path: data/raw/customerdata.csv
-      md5: f8ffec51993a3182cdd38dfea02d79db
-      size: 879140
+      md5: dbd16bbb9a2252c8413f0ae5e8ddbbc5
+      size: 879273
     - path: src/get_data.py
-      md5: 530548f2bd47ef6c7c864d046a7de66d
-      size: 1493
+      md5: f9efe881ea7051b032bc145a8d648b2b
+      size: 1494
     - path: src/split_data.py
-      md5: 57757d3b32482b4cba67d6eaaab4c58f
-      size: 1112
+      md5: 4d5dc66fc3b0d574909057007fd6e987
+      size: 1374
     outs:
     - path: data/processed/test_customerdata.csv
-      md5: 78742c3bdb8bbfe81f0bdd305406a698
-      size: 174678
+      md5: 4514a84774ecc431188b78f6459d6c4b
+      size: 174232
     - path: data/processed/train_customerdata.csv
-      md5: ea5d92e78184339e84f27861c0bd479b
-      size: 699897
+      md5: 90671aaf52cf75bf7e8734479fd0026a
+      size: 699656
   train_and_evaluate:
     cmd: python src/train_evaluate.py --config=params.yaml
     deps:
     - path: data/processed/test_customerdata.csv
-      md5: 78742c3bdb8bbfe81f0bdd305406a698
-      size: 174678
+      md5: 4514a84774ecc431188b78f6459d6c4b
+      size: 174232
     - path: data/processed/train_customerdata.csv
-      md5: ea5d92e78184339e84f27861c0bd479b
-      size: 699897
+      md5: 90671aaf52cf75bf7e8734479fd0026a
+      size: 699656
     - path: src/train_evaluate.py
       md5: 63bb483874ea959989eecb7868531f23
       size: 3665
     params:
       params.yaml:
         estimators.RandomForestClassifier.params.criterion: gini
-        estimators.RandomForestClassifier.params.max_depth: 1000
-        estimators.RandomForestClassifier.params.max_features: sqrt
-        estimators.RandomForestClassifier.params.min_samples_leaf: 6
-        estimators.RandomForestClassifier.params.min_samples_split: 12
-        estimators.RandomForestClassifier.params.n_estimators: 2000
+        estimators.RandomForestClassifier.params.max_depth: 10
+        estimators.RandomForestClassifier.params.max_features: log2
+        estimators.RandomForestClassifier.params.min_samples_leaf: 8
+        estimators.RandomForestClassifier.params.min_samples_split: 14
+        estimators.RandomForestClassifier.params.n_estimators: 1000
     outs:
     - path: report/params.json
-      md5: ff2ec6ba50ce694a4f61151f72a65ac1
-      size: 160
+      md5: 00ece463b7aaa0e28bdb6222df032f5e
+      size: 158
     - path: report/scores.json
-      md5: 434b377419870ea7edc44cf510fa3359
-      size: 112
+      md5: 1bb82084c415a54d32e4b48a46159a15
+      size: 111
     - path: saved_models/model.joblib
-      md5: c24b537de86b353b589aa0c150427ee4
-      size: 91638883
+      md5: c97f67e4ac907f099d8f58be0e714b07
+      size: 24802005

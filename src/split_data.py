@@ -2,6 +2,7 @@ import os
 import argparse
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from collections import Counter
 from get_data import read_params
 
 def split_and_saved_data(config_path):
@@ -13,6 +14,13 @@ def split_and_saved_data(config_path):
     random_state = config["base"]["random_state"]
 
     df = pd.read_csv(raw_data_path, sep=",")
+    unwanted_data = df[df.Churn==1].index
+    #print(unwanted_data)
+    df.drop(unwanted_data, axis=0,inplace=True)
+    df.Churn.replace(2,1, inplace=True)
+    #print(df.head())
+    counts = Counter(df['Churn'])
+    print(counts)
     train, test = train_test_split(
         df, 
         test_size=split_ratio, 
